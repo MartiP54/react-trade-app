@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AdminPage from './pages/AdminPage';
+import ParticipantPage from './pages/ParticipantPage';
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
           }
         />
         <Route path="/admin" element={<AdminPage />} />;
+        <Route path="/auction/:userId" element={<ParticipantPage />} />
         <Route path="*" element={<h2>Страница не найдена</h2>} />
       </Routes>
     </Router>
