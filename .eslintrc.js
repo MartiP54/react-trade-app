@@ -22,8 +22,16 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': [ 'error',
+    { endOfLine: "auto" } ],
     'react/react-in-jsx-scope': 'off',
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ]
   },
   settings: {
     react: {
