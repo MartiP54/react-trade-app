@@ -2,6 +2,7 @@ import express from 'express';
 import http from 'http';
 import { Server, Socket } from 'socket.io';
 import cors from 'cors';
+import { AuctionData } from '../types/shared';
 
 const app = express();
 const server = http.createServer(app);
@@ -15,25 +16,6 @@ const io = new Server(server, {
     credentials: true,
   },
 });
-
-interface Participant {
-  id: number;
-  name: string;
-  bid: number;
-  discount: number;
-  finalPrice: number;
-  manufacturingDays: number;
-  warrantyMonths: number;
-  paymentConditions: number;
-}
-
-interface AuctionData {
-  participants: Participant[];
-  currentTurn: number;
-  remainingTime: number;
-  totalTime: number;
-  isAuctionActive: boolean;
-}
 
 const auctionData: AuctionData = {
   participants: [
