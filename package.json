@@ -16,6 +16,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.7",
     "@mui/material": "^6.1.7",
     "@types/react-router-dom": "^5.3.3",
     "cors": "^2.8.5",
