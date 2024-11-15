@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { io, Socket } from 'socket.io-client';
 import { Button } from '@mui/material';
+import AuctionTable from '../components/AuctionTable';
 import formatTime from '../utils/timeUtils';
 import { AuctionData } from '../types/shared';
 
@@ -26,6 +27,20 @@ const ParticipantPage: React.FC = () => {
     };
   }, []);
 
+  const handleInputChange = (
+    participantId: number,
+    field: string,
+    value: number,
+  ) => {
+    setEditedData((prev) => ({
+      ...prev,
+      [participantId]: {
+        ...prev[participantId],
+        [field]: value,
+      },
+    }));
+  };
+
   const handlePassTurn = () => {
     if (socket && auctionData?.currentTurn === Number(userId)) {
       const updatedData = editedData[Number(userId)];
@@ -33,6 +48,7 @@ const ParticipantPage: React.FC = () => {
       setEditedData({});
     }
   };
+
   return (
     <div>
       <h1>Торги для участника #{userId}</h1>
@@ -41,6 +57,18 @@ const ParticipantPage: React.FC = () => {
       </h2>
 
       <div>
+        {auctionData && (
+          <AuctionTable
+            participants={auctionData.participants}
+            currentTurn={auctionData.currentTurn}
+            remainingTime={auctionData.remainingTime}
+            totalTime={auctionData.totalTime}
+            mode="participant"
+            editedData={editedData}
+            onInputChange={handleInputChange}
+            userId={Number(userId)}
+          />
+        )}
         <Button
           variant="contained"
           color="primary"

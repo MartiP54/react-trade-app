@@ -15,4 +15,8 @@ export interface AuctionData {
   remainingTime: number;
   totalTime: number;
   isAuctionActive?: boolean;
+  mode: 'admin' | 'participant';
+  editedData?: Record<number, Record<string, number>>;
+  onInputChange?: (id: number, field: keyof Participant, value: number) => void;
+  userId?: number;
 }

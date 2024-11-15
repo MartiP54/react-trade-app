@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { Button } from '@mui/material';
-import { AuctionData } from '../types/shared';
+import { Button, TableContainer, Paper } from '@mui/material';
+import AuctionTable from '../components/AuctionTable';
 import formatTime from '../utils/timeUtils';
+import { AuctionData } from '../types/shared';
 
 const AdminPage: React.FC = () => {
   const [auctionData, setAuctionData] = useState<AuctionData | null>(null);
@@ -40,7 +41,6 @@ const AdminPage: React.FC = () => {
       >
         Начать торги
       </Button>
-
       <Button
         variant="contained"
         color="secondary"
@@ -55,6 +55,18 @@ const AdminPage: React.FC = () => {
         Общее оставшееся время торгов:{' '}
         {auctionData ? formatTime(auctionData.totalTime) : '00:00'}
       </h2>
+
+      {auctionData && (
+        <TableContainer component={Paper} sx={{ marginTop: 2 }}>
+          <AuctionTable
+            participants={auctionData.participants}
+            currentTurn={auctionData.currentTurn}
+            remainingTime={auctionData.remainingTime}
+            totalTime={auctionData.totalTime}
+            mode="admin"
+          />
+        </TableContainer>
+      )}
     </div>
   );
 };
