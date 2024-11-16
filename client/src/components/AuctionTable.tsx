@@ -8,19 +8,19 @@ import {
   TableRow,
   Paper,
   Typography,
-  TextField,
-  InputAdornment,
 } from '@mui/material';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+import renderCellContent from './renderCellContent';
 import { AuctionData, Participant } from '../types/shared';
 
 const AuctionTable: React.FC<AuctionData> = ({
   participants,
   currentTurn,
   remainingTime,
-  editedData,
   onInputChange,
   userId,
+  isAuctionActive,
+  editedData,
 }) => {
   const [inputValues, setInputValues] = useState<
     Record<number, Record<string, string>>
@@ -41,37 +41,6 @@ const AuctionTable: React.FC<AuctionData> = ({
       return newValues;
     });
   }, [participants]);
-
-  const handleNumberInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    participantId: number,
-    field: keyof Participant,
-  ) => {
-    const { value } = e.target;
-    const numericValue = value.replace('%', '');
-
-    if (field === 'paymentConditions') {
-      const numberValue = Number(numericValue);
-      if (Number.isNaN(numberValue) || numberValue < 0 || numberValue > 100) {
-        return;
-      }
-    }
-
-    const displayValue =
-      field === 'paymentConditions' ? `${numericValue}%` : numericValue;
-
-    setInputValues((prevValues) => ({
-      ...prevValues,
-      [participantId]: {
-        ...prevValues[participantId],
-        [field]: displayValue,
-      },
-    }));
-
-    if (onInputChange && numericValue && !Number.isNaN(Number(numericValue))) {
-      onInputChange(participantId, field, Number(numericValue));
-    }
-  };
 
   return (
     <TableContainer
@@ -170,46 +139,17 @@ const AuctionTable: React.FC<AuctionData> = ({
                         : 'transparent',
                   }}
                 >
-                  {(() => {
-                    if (
-                      currentTurn === participant.id &&
-                      userId === participant.id
-                    ) {
-                      return (
-                        <TextField
-                          value={
-                            inputValues[participant.id]?.[field]?.replace(
-                              '%',
-                              '',
-                            ) || ''
-                          }
-                          onChange={(e) =>
-                            handleNumberInputChange(
-                              e,
-                              participant.id,
-                              field as keyof Participant,
-                            )
-                          }
-                          variant="standard"
-                          disabled={userId !== participant.id}
-                          InputProps={{
-                            endAdornment:
-                              field === 'paymentConditions' ? (
-                                <InputAdornment position="end">
-                                  %
-                                </InputAdornment>
-                              ) : undefined,
-                          }}
-                        />
-                      );
-                    }
-
-                    if (field === 'paymentConditions') {
-                      return `${participant.paymentConditions}%`;
-                    }
-
-                    return participant[field as keyof Participant];
-                  })()}
+                  {renderCellContent({
+                    participant,
+                    field: field as keyof Participant,
+                    currentTurn,
+                    userId,
+                    isAuctionActive,
+                    inputValues,
+                    setInputValues,
+                    onInputChange,
+                    editedData,
+                  })}
                 </TableCell>
               ))}
             </TableRow>
@@ -239,27 +179,17 @@ const AuctionTable: React.FC<AuctionData> = ({
                         : 'transparent',
                   }}
                 >
-                  {currentTurn === participant.id &&
-                  userId === participant.id ? (
-                    <TextField
-                      type="number"
-                      value={
-                        editedData?.[participant.id]?.[field] ??
-                        String(participant[field as keyof Participant])
-                      }
-                      onChange={(e) =>
-                        handleNumberInputChange(
-                          e,
-                          participant.id,
-                          field as keyof Participant,
-                        )
-                      }
-                      variant="standard"
-                      disabled={userId !== participant.id}
-                    />
-                  ) : (
-                    participant[field as keyof Participant]
-                  )}
+                  {renderCellContent({
+                    participant,
+                    field: field as keyof Participant,
+                    currentTurn,
+                    userId,
+                    isAuctionActive,
+                    inputValues,
+                    setInputValues,
+                    onInputChange,
+                    editedData,
+                  })}
                 </TableCell>
               ))}
             </TableRow>

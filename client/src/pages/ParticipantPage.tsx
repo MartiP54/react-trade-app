@@ -79,6 +79,7 @@ const ParticipantPage: React.FC = () => {
             editedData={editedData}
             onInputChange={handleInputChange}
             userId={Number(userId)}
+            isAuctionActive={auctionData.isAuctionActive}
           />
         )}
         <Button
