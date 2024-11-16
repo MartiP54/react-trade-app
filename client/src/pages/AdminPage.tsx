@@ -74,6 +74,7 @@ const AdminPage: React.FC = () => {
             remainingTime={auctionData.remainingTime}
             totalTime={auctionData.totalTime}
             mode="admin"
+            isAuctionActive={auctionData.isAuctionActive}
           />
         </TableContainer>
       )}

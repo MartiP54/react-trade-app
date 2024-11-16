@@ -21,6 +21,7 @@ const AuctionTable: React.FC<AuctionData> = ({
   editedData,
   onInputChange,
   userId,
+  isAuctionActive,
 }) => {
   const [inputValues, setInputValues] = useState<
     Record<number, Record<string, string>>
@@ -191,7 +192,9 @@ const AuctionTable: React.FC<AuctionData> = ({
                             )
                           }
                           variant="standard"
-                          disabled={userId !== participant.id}
+                          disabled={
+                            !isAuctionActive || userId !== participant.id
+                          }
                           InputProps={{
                             endAdornment:
                               field === 'paymentConditions' ? (
@@ -255,7 +258,7 @@ const AuctionTable: React.FC<AuctionData> = ({
                         )
                       }
                       variant="standard"
-                      disabled={userId !== participant.id}
+                      disabled={!isAuctionActive || userId !== participant.id}
                     />
                   ) : (
                     participant[field as keyof Participant]
