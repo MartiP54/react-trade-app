@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Box, Typography } from '@mui/material';
-import { Dashboard } from '@mui/icons-material';
+import { Dashboard, GitHub } from '@mui/icons-material';
 
 const HomePage: React.FC = () => {
   return (
@@ -12,7 +12,7 @@ const HomePage: React.FC = () => {
         alignItems: 'center',
         justifyContent: 'center',
         gap: 3,
-        minHeight: '100vh',
+        minHeight: '90vh',
         padding: 4,
         backgroundColor: '#f9f9f9',
       }}
@@ -71,6 +71,29 @@ const HomePage: React.FC = () => {
           </Button>
         ))}
       </Box>
+      <Button
+        variant="outlined"
+        startIcon={<GitHub />}
+        component="a"
+        href="https://github.com/MartiP54"
+        target="_blank"
+        rel="noopener noreferrer"
+        sx={{
+          marginTop: 'auto',
+          borderRadius: '8px',
+          fontSize: '16px',
+          padding: '10px 20px',
+          color: '#333',
+          borderColor: '#333',
+          '&:hover': {
+            backgroundColor: '#333',
+            color: 'white',
+            borderColor: '#333',
+          },
+        }}
+      >
+        Автор проекта: MartiP54
+      </Button>
     </Box>
   );
 };
