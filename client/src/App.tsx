@@ -1,24 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Typography } from '@mui/material';
 import AdminPage from './pages/AdminPage';
 import ParticipantPage from './pages/ParticipantPage';
+import HomePage from './pages/HomePage';
 
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              <h1>Добро пожаловать на торговую платформу</h1>
-              <p>Для участия в торгах перейдите по своей уникальной ссылке.</p>
-            </div>
-          }
-        />
-        <Route path="/admin" element={<AdminPage />} />;
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/auction/:userId" element={<ParticipantPage />} />
-        <Route path="*" element={<h2>Страница не найдена</h2>} />
+        <Route
+          path="*"
+          element={<Typography variant="h5">Страница не найдена</Typography>}
+        />
       </Routes>
     </Router>
   );
