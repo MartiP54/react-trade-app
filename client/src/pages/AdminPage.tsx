@@ -4,10 +4,13 @@ import { Button, TableContainer, Paper } from '@mui/material';
 import AuctionTable from '../components/AuctionTable';
 import formatTime from '../utils/timeUtils';
 import { AuctionData } from '../types/shared';
+import NotificationPopup from '../components/NotificationPopup';
 
 const AdminPage: React.FC = () => {
   const [auctionData, setAuctionData] = useState<AuctionData | null>(null);
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
 
   useEffect(() => {
     const newSocket = io('http://localhost:3001');
@@ -15,6 +18,11 @@ const AdminPage: React.FC = () => {
 
     newSocket.on('auctionData', (data: AuctionData) => {
       setAuctionData(data);
+    });
+
+    newSocket.on('auctionEnd', (message: string) => {
+      setPopupMessage(message);
+      setIsPopupOpen(true);
     });
 
     return () => {
@@ -29,6 +37,8 @@ const AdminPage: React.FC = () => {
   const endAuction = () => {
     socket?.emit('endAuction');
   };
+
+  const closePopup = () => setIsPopupOpen(false);
 
   return (
     <div>
@@ -67,6 +77,12 @@ const AdminPage: React.FC = () => {
           />
         </TableContainer>
       )}
+
+      <NotificationPopup
+        message={popupMessage}
+        isOpen={isPopupOpen}
+        onClose={closePopup}
+      />
     </div>
   );
 };
