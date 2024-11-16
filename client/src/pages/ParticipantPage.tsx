@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import AuctionTable from '../components/AuctionTable';
 import formatTime from '../utils/timeUtils';
 import { AuctionData } from '../types/shared';
+import NotificationPopup from '../components/NotificationPopup';
 
 const ParticipantPage: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();
@@ -13,6 +14,8 @@ const ParticipantPage: React.FC = () => {
   const [editedData, setEditedData] = useState<
     Record<number, Record<string, number>>
   >({});
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
 
   useEffect(() => {
     const newSocket = io('http://localhost:3001');
@@ -20,6 +23,11 @@ const ParticipantPage: React.FC = () => {
 
     newSocket.on('auctionData', (data: AuctionData) => {
       setAuctionData(data);
+    });
+
+    newSocket.on('auctionEnd', (message: string) => {
+      setPopupMessage(message);
+      setIsPopupOpen(true);
     });
 
     return () => {
@@ -48,6 +56,8 @@ const ParticipantPage: React.FC = () => {
       setEditedData({});
     }
   };
+
+  const closePopup = () => setIsPopupOpen(false);
 
   return (
     <div>
@@ -87,6 +97,11 @@ const ParticipantPage: React.FC = () => {
           сделать ставку и передать ход
         </Button>
       </div>
+      <NotificationPopup
+        message={popupMessage}
+        isOpen={isPopupOpen}
+        onClose={closePopup}
+      />
     </div>
   );
 };
