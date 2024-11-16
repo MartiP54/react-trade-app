@@ -63,11 +63,13 @@ const renderCellContent = ({
         }}
         variant="standard"
         disabled={!isEditable}
-        InputProps={{
-          endAdornment:
-            field === 'paymentConditions' ? (
-              <InputAdornment position="end">%</InputAdornment>
-            ) : undefined,
+        slotProps={{
+          input: {
+            endAdornment:
+              field === 'paymentConditions' ? (
+                <InputAdornment position="end">%</InputAdornment>
+              ) : undefined,
+          },
         }}
         sx={{
           width: '30%',
