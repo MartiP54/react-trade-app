@@ -54,6 +54,8 @@ const ParticipantPage: React.FC = () => {
       const updatedData = editedData[Number(userId)];
       socket.emit('placeBid', { userId: Number(userId), ...updatedData });
       setEditedData({});
+      setPopupMessage('Ваша ставка принята');
+      setIsPopupOpen(true);
     }
   };
 
