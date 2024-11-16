@@ -203,6 +203,12 @@ const AuctionTable: React.FC<AuctionData> = ({
                                 </InputAdornment>
                               ) : undefined,
                           }}
+                          sx={{
+                            width: '30%',
+                            '.MuiInputBase-input': {
+                              textAlign: 'center',
+                            },
+                          }}
                         />
                       );
                     }
@@ -259,6 +265,12 @@ const AuctionTable: React.FC<AuctionData> = ({
                       }
                       variant="standard"
                       disabled={!isAuctionActive || userId !== participant.id}
+                      sx={{
+                        width: '30%',
+                        '.MuiInputBase-input': {
+                          textAlign: 'center',
+                        },
+                      }}
                     />
                   ) : (
                     participant[field as keyof Participant]
