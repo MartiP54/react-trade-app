@@ -2,19 +2,28 @@ import express from 'express';
 import http from 'http';
 import { Server, Socket } from 'socket.io';
 import cors from 'cors';
+import dotenv from 'dotenv';
+import path from 'path';
 import { AuctionData } from '../types/shared';
+
+dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: '*' }));
 
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: '*',
     methods: ['GET', 'POST'],
     credentials: true,
   },
+});
+
+app.use(express.static(path.join(__dirname, 'client')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'index.html'));
 });
 
 const auctionData: AuctionData = {
@@ -162,6 +171,6 @@ io.on('connection', (socket: Socket) => {
   });
 });
 
-server.listen(3001, () => {
-  console.log('Server is running on port 3001');
+server.listen(process.env.SERVER_PORT, () => {
+  console.log(`Server is running on port ${process.env.SERVER_PORT}`);
 });

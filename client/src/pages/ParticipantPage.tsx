@@ -18,7 +18,7 @@ const ParticipantPage: React.FC = () => {
   const [popupMessage, setPopupMessage] = useState('');
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3001');
+    const newSocket = io(process.env.SERVER_URL);
     setSocket(newSocket);
 
     newSocket.on('auctionData', (data: AuctionData) => {
