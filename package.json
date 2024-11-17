@@ -7,7 +7,7 @@
     "build:client": "webpack --config webpack.client.config.js",
     "build:server": "webpack --config webpack.server.config.js",
     "build": "npm run build:client && npm run build:server",
-    "start": "ts-node server/src/index.ts",
+    "start": "node dist/server.js",
     "dev": "concurrently \"webpack serve --config webpack.client.config.js\" \"ts-node-dev --respawn server/src/index.ts\"",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write ."

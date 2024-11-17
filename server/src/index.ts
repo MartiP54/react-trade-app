@@ -3,6 +3,7 @@ import http from 'http';
 import { Server, Socket } from 'socket.io';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import { AuctionData } from '../types/shared';
 
 dotenv.config();
@@ -18,6 +19,11 @@ const io = new Server(server, {
     methods: ['GET', 'POST'],
     credentials: true,
   },
+});
+
+app.use(express.static(path.join(__dirname, 'client')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'index.html'));
 });
 
 const auctionData: AuctionData = {
