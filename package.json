@@ -7,7 +7,7 @@
     "build:client": "webpack --config webpack.client.config.js",
     "build:server": "webpack --config webpack.server.config.js",
     "build": "npm run build:client && npm run build:server",
-    "start": "node dist/server.js",
+    "start": "ts-node server/src/index.ts",
     "dev": "concurrently \"webpack serve --config webpack.client.config.js\" \"ts-node-dev --respawn server/src/index.ts\"",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write ."
@@ -57,6 +57,7 @@
     "typescript": "^5.6.3",
     "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.1.0"
+    "webpack-dev-server": "^5.1.0",
+    "webpack-node-externals": "^3.0.0"
   }
 }
