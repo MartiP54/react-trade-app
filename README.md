@@ -2,6 +2,9 @@
 
 This application has been developed as part of a test task. It serves as a virtual room for conducting auctions, allowing participants to engage in bidding and manage auction parameters in real-time.
 
+## Deploy
+https://react-trade-app.onrender.com/
+
 ## Stack used 🛠️:
 1. TypeScript
 2. React.js
