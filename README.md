@@ -24,15 +24,11 @@ https://react-trade-app.onrender.com/
 
 - Use `npm run build` to compile tsx files into JavaScript.
 
-3. Run Tests:
-
-- Execute `npm run test` to run Vitest tests. Ensure all tests pass before deploying any changes to production.
-
-4. Linting:
+3. Linting:
 
 - Utilize `npm run lint` to run the linter and ensure code consistency and adherence to coding standards.
 
-5. Format code:
+4. Format code:
 
 - Use `npm run format` to format code according to predefined style rules. This ensures consistent code formatting across the project.
 
