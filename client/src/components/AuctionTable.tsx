@@ -8,6 +8,7 @@ import {
   TableRow,
   Paper,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import renderCellContent from './renderCellContent';
@@ -25,6 +26,7 @@ const AuctionTable: React.FC<AuctionData> = ({
   const [inputValues, setInputValues] = useState<
     Record<number, Record<string, string>>
   >({});
+  const isMobile = useMediaQuery('(max-width: 600px)');
 
   useEffect(() => {
     setInputValues((prevValues) => {
@@ -45,29 +47,64 @@ const AuctionTable: React.FC<AuctionData> = ({
   return (
     <TableContainer
       component={Paper}
-      sx={{ maxWidth: '95%', marginTop: 2, padding: 2, overflowX: 'auto' }}
+      sx={{
+        maxWidth: isMobile ? '100%' : '95%',
+        marginTop: 2,
+        padding: isMobile ? 1 : 2,
+        overflowX: 'auto',
+      }}
     >
-      <Typography variant="h6" gutterBottom color="error">
+      <Typography
+        variant="h6"
+        gutterBottom
+        color="error"
+        sx={{
+          fontSize: isMobile ? '1rem' : '1.25rem',
+          textAlign: isMobile ? 'center' : 'left',
+        }}
+      >
         Ход торгов Тестовые торги на тестовое задание
       </Typography>
-      <Typography variant="body2" gutterBottom color="textSecondary">
+      <Typography
+        variant="body2"
+        gutterBottom
+        color="textSecondary"
+        sx={{
+          fontSize: isMobile ? '0.75rem' : '0.875rem',
+          textAlign: 'center',
+        }}
+      >
         Уважаемые участники, во время вашего хода вы можете изменить параметры
         торгов, указанных в таблице:
       </Typography>
-      <Table sx={{ tableLayout: 'auto', width: '100%' }}>
+      <Table
+        sx={{
+          tableLayout: 'auto',
+          width: '100%',
+          fontSize: isMobile ? '0.75rem' : '1rem',
+        }}
+      >
         <TableHead>
           <TableRow>
-            <TableCell sx={{ borderBottom: 'none' }}>Ход</TableCell>
+            <TableCell
+              sx={{
+                borderBottom: 'none',
+                fontSize: isMobile ? '0.75rem' : '1rem',
+              }}
+            >
+              Ход
+            </TableCell>
             {participants.map((participant) => (
               <TableCell
                 key={participant.id}
-                style={{
+                sx={{
                   textAlign: 'center',
                   backgroundColor:
                     currentTurn === participant.id
                       ? 'rgba(255, 0, 0, 0.1)'
                       : 'transparent',
                   borderBottom: 'none',
+                  fontSize: isMobile ? '0.75rem' : '1rem',
                 }}
               >
                 {currentTurn === participant.id && (
@@ -78,8 +115,17 @@ const AuctionTable: React.FC<AuctionData> = ({
                       justifyContent: 'center',
                     }}
                   >
-                    <HourglassEmptyIcon style={{ marginRight: 4 }} />
-                    <Typography variant="body2" color="error">
+                    <HourglassEmptyIcon
+                      style={{
+                        marginRight: 4,
+                        fontSize: isMobile ? '16px' : '24px',
+                      }}
+                    />
+                    <Typography
+                      variant="body2"
+                      color="error"
+                      sx={{ fontSize: isMobile ? '0.65rem' : '0.875rem' }}
+                    >
                       {remainingTime} секунд
                     </Typography>
                   </div>
@@ -88,17 +134,20 @@ const AuctionTable: React.FC<AuctionData> = ({
             ))}
           </TableRow>
           <TableRow>
-            <TableCell>Параметры и требования</TableCell>
+            <TableCell sx={{ fontSize: isMobile ? '0.75rem' : '1rem' }}>
+              Параметры и требования
+            </TableCell>
             {participants.map((participant) => (
               <TableCell
                 key={participant.id}
-                style={{
+                sx={{
                   textAlign: 'center',
                   backgroundColor:
                     currentTurn === participant.id
                       ? 'rgba(0, 0, 0, 0.05)'
                       : 'transparent',
                   fontWeight: 'bold',
+                  fontSize: isMobile ? '0.75rem' : '1rem',
                 }}
               >
                 {participant.name}
@@ -110,7 +159,11 @@ const AuctionTable: React.FC<AuctionData> = ({
           <TableRow>
             <TableCell
               colSpan={participants.length + 1}
-              style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}
+              sx={{
+                fontWeight: 'bold',
+                backgroundColor: '#f0f0f0',
+                fontSize: isMobile ? '0.75rem' : '1rem',
+              }}
             >
               Условия
             </TableCell>
@@ -127,16 +180,19 @@ const AuctionTable: React.FC<AuctionData> = ({
             { field: 'paymentConditions', label: 'Условия оплаты' },
           ].map(({ field, label }) => (
             <TableRow key={field}>
-              <TableCell>{label}</TableCell>
+              <TableCell sx={{ fontSize: isMobile ? '0.75rem' : '1rem' }}>
+                {label}
+              </TableCell>
               {participants.map((participant) => (
                 <TableCell
                   key={participant.id}
-                  style={{
+                  sx={{
                     textAlign: 'center',
                     backgroundColor:
                       currentTurn === participant.id
                         ? 'rgba(0, 0, 0, 0.05)'
                         : 'transparent',
+                    fontSize: isMobile ? '0.75rem' : '1rem',
                   }}
                 >
                   {renderCellContent({
@@ -157,7 +213,11 @@ const AuctionTable: React.FC<AuctionData> = ({
           <TableRow>
             <TableCell
               colSpan={participants.length + 1}
-              style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}
+              sx={{
+                fontWeight: 'bold',
+                backgroundColor: '#f0f0f0',
+                fontSize: isMobile ? '0.75rem' : '1rem',
+              }}
             >
               Ставки
             </TableCell>
@@ -167,16 +227,19 @@ const AuctionTable: React.FC<AuctionData> = ({
             { field: 'discount', label: 'Скидка' },
           ].map(({ field, label }) => (
             <TableRow key={field}>
-              <TableCell>{label}</TableCell>
+              <TableCell sx={{ fontSize: isMobile ? '0.75rem' : '1rem' }}>
+                {label}
+              </TableCell>
               {participants.map((participant) => (
                 <TableCell
                   key={participant.id}
-                  style={{
+                  sx={{
                     textAlign: 'center',
                     backgroundColor:
                       currentTurn === participant.id
                         ? 'rgba(0, 0, 0, 0.05)'
                         : 'transparent',
+                    fontSize: isMobile ? '0.75rem' : '1rem',
                   }}
                 >
                   {renderCellContent({
@@ -195,17 +258,20 @@ const AuctionTable: React.FC<AuctionData> = ({
             </TableRow>
           ))}
           <TableRow>
-            <TableCell>Итоговая цена</TableCell>
+            <TableCell sx={{ fontSize: isMobile ? '0.75rem' : '1rem' }}>
+              Итоговая цена
+            </TableCell>
             {participants.map((participant) => (
               <TableCell
                 key={participant.id}
-                style={{
+                sx={{
                   textAlign: 'center',
                   color: 'green',
                   backgroundColor:
                     currentTurn === participant.id
                       ? 'rgba(0, 0, 0, 0.05)'
                       : 'transparent',
+                  fontSize: isMobile ? '0.75rem' : '1rem',
                 }}
               >
                 {participant.finalPrice}
