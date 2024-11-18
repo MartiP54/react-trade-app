@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { io, Socket } from 'socket.io-client';
-import { Button } from '@mui/material';
+import { Button, Box, Typography } from '@mui/material';
 import AuctionTable from '../components/AuctionTable';
 import formatTime from '../utils/timeUtils';
 import { AuctionData } from '../types/shared';
@@ -62,25 +62,66 @@ const ParticipantPage: React.FC = () => {
   const closePopup = () => setIsPopupOpen(false);
 
   return (
-    <div>
-      <h1>Торги для участника #{userId}</h1>
-      <h2>
+    <Box
+      sx={{
+        padding: '16px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        maxWidth: '100%',
+        overflowX: 'hidden',
+      }}
+    >
+      <Typography
+        variant="h4"
+        sx={{
+          fontSize: { xs: '20px', sm: '24px' },
+          textAlign: 'center',
+          marginBottom: 2,
+          wordWrap: 'break-word',
+        }}
+      >
+        Торги для участника #{userId}
+      </Typography>
+      <Typography
+        variant="h6"
+        sx={{
+          fontSize: { xs: '16px', sm: '18px' },
+          textAlign: 'center',
+          marginBottom: 3,
+          wordWrap: 'break-word',
+        }}
+      >
         Общее оставшееся время торгов: {formatTime(auctionData?.totalTime || 0)}
-      </h2>
+      </Typography>
 
-      <div>
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
         {auctionData && (
-          <AuctionTable
-            participants={auctionData.participants}
-            currentTurn={auctionData.currentTurn}
-            remainingTime={auctionData.remainingTime}
-            totalTime={auctionData.totalTime}
-            mode="participant"
-            editedData={editedData}
-            onInputChange={handleInputChange}
-            userId={Number(userId)}
-            isAuctionActive={auctionData.isAuctionActive}
-          />
+          <Box
+            sx={{
+              width: '100%',
+              overflowX: 'auto',
+            }}
+          >
+            <AuctionTable
+              participants={auctionData.participants}
+              currentTurn={auctionData.currentTurn}
+              remainingTime={auctionData.remainingTime}
+              totalTime={auctionData.totalTime}
+              mode="participant"
+              editedData={editedData}
+              onInputChange={handleInputChange}
+              userId={Number(userId)}
+              isAuctionActive={auctionData.isAuctionActive}
+            />
+          </Box>
         )}
         <Button
           variant="contained"
@@ -92,20 +133,23 @@ const ParticipantPage: React.FC = () => {
           }
           sx={{
             marginTop: 2,
-            padding: '10px 20px',
+            padding: { xs: '8px 16px', sm: '10px 20px' },
             fontWeight: 'bold',
-            fontSize: '16px',
+            fontSize: { xs: '14px', sm: '16px' },
+            width: { xs: '100%', sm: 'auto' },
+            maxWidth: '400px',
+            alignSelf: { xs: 'center', sm: 'flex-start' },
           }}
         >
-          сделать ставку и передать ход
+          Сделать ставку и передать ход
         </Button>
-      </div>
+      </Box>
       <NotificationPopup
         message={popupMessage}
         isOpen={isPopupOpen}
         onClose={closePopup}
       />
-    </div>
+    </Box>
   );
 };
 
