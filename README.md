@@ -10,9 +10,8 @@ This application has been developed as part of a test task. It serves as a virtu
 2. React.js
 4. MUI
 5. Webpack
-6. Vitest
-7. Node.js
-8. Socket.IO
+6. Node.js
+7. Socket.IO
 
 
 ## Document scripts:
